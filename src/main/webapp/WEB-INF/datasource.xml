@@ -20,5 +20,5 @@
 	</bean>
 	<bean class="org.fx.lanifier.entites.dao.jdbc.JDBCUtilisateurDAO"></bean>
 	
-	<context:property-placeholder location="WEB-INF/properties/jdbc.properties"/>
+	<context:property-placeholder location="classpath:properties/jdbc.properties"/>
 </beans>

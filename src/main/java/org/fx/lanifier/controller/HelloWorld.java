@@ -5,6 +5,7 @@ import java.util.List;
 import org.fx.lanifier.entites.dao.UtilisateurDAO;
 import org.fx.lanifier.entites.utilisateur.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,10 +18,15 @@ public class HelloWorld {
 
 	@Autowired
 	UtilisateurDAO utilisateurDAO;
+	@Autowired
+	Environment env;
+	
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String helloWorld(ModelMap model) {
 		model.addAttribute("message", "hello world");
+		System.out.println(env.getProperty("steamKey"));
+		model.addAttribute("key", env.getProperty("steamKey"));
 		return "hello";
 	}
 
