@@ -1,11 +1,16 @@
 package org.fx.lanifier.controller;
 
 import java.util.List;
+import java.util.Properties;
 
 import org.fx.lanifier.entites.dao.UtilisateurDAO;
+import org.fx.lanifier.entites.settings.ManagementProperty;
 import org.fx.lanifier.entites.utilisateur.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,12 +26,14 @@ public class HelloWorld {
 	@Autowired
 	Environment env;
 	
+	@Autowired
+	ManagementProperty mp;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String helloWorld(ModelMap model) {
 		model.addAttribute("message", "hello world");
-		System.out.println(env.getProperty("steamKey"));
-		model.addAttribute("key", env.getProperty("steamKey"));
+		System.out.println(mp.getSteamKey());
+		model.addAttribute(mp.getSteamKey());
 		return "hello";
 	}
 

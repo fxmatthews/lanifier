@@ -13,13 +13,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class IDManager {
-	
+
 	@RequestMapping(value = "manageID", method = RequestMethod.GET)
 	public ModelAndView manageID(
 			@ModelAttribute("steamIDList") SteamIDList idList) {
 		return new ModelAndView("formulairesID");
 	}
 
+	// TODO : récupérer la liste des jeux + les infos des jeux
 	@RequestMapping(value = "manageID", method = RequestMethod.POST)
 	public void displayID(@ModelAttribute("steamIDList") SteamIDList idList) {
 		List<String> ids = idList.getIds();
