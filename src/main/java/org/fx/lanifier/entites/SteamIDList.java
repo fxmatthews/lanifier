@@ -1,4 +1,4 @@
-package org.fx.lanifier.entites.utilisateur;
+package org.fx.lanifier.entites;
 
 import java.util.List;
 

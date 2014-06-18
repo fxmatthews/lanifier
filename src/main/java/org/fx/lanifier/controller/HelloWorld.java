@@ -3,9 +3,9 @@ package org.fx.lanifier.controller;
 import java.util.List;
 import java.util.Properties;
 
+import org.fx.lanifier.entites.Utilisateur;
 import org.fx.lanifier.entites.dao.UtilisateurDAO;
 import org.fx.lanifier.entites.settings.ManagementProperty;
-import org.fx.lanifier.entites.utilisateur.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;

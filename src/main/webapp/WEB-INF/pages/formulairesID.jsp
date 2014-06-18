@@ -28,7 +28,6 @@
 		var length = (table.rows.length) - 1;
 		element2.name = "ids[" + length + "]";
 		cell3.appendChild(element2);
-
 	}
 
 	function deleteRow(tableID) {

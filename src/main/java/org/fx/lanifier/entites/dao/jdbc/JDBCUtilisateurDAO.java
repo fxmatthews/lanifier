@@ -2,8 +2,8 @@ package org.fx.lanifier.entites.dao.jdbc;
 
 import java.util.List;
 
+import org.fx.lanifier.entites.Utilisateur;
 import org.fx.lanifier.entites.dao.UtilisateurDAO;
-import org.fx.lanifier.entites.utilisateur.Utilisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

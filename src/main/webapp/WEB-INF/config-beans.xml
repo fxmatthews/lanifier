@@ -10,6 +10,8 @@
 	<bean class="org.fx.lanifier.entites.settings.ManagementProperty">
 		<property name="steamKey" value="${steamKey}" />
 	</bean>
+	
+	<bean class="org.fx.lanifier.steamapi.SteamUserBuilder"></bean>
 
 
 	<context:property-placeholder

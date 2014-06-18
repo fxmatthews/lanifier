@@ -2,7 +2,7 @@ package org.fx.lanifier.entites.dao;
 
 import java.util.List;
 
-import org.fx.lanifier.entites.utilisateur.Utilisateur;
+import org.fx.lanifier.entites.Utilisateur;
 
 
 public interface UtilisateurDAO {
