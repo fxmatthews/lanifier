@@ -1,5 +1,6 @@
 package org.fx.lanifier.entites.jeux.pojoRest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GamesList {
@@ -24,11 +25,19 @@ public class GamesList {
 	public void setGames(List<SteamGame> games) {
 		this.games = games;
 	}
+	
+	public List<String> getPrettyList(){
+		List<String> result = new ArrayList<String>();
+		for(SteamGame game : games)
+			result.add(game.getName());
+		return result;
+	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder(String.valueOf(game_count));
 		for (SteamGame game : games) {
 			sb.append(game.toString());
+			sb.append("\n");
 		}
 		return sb.toString();
 	}

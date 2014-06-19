@@ -34,6 +34,14 @@
 			<version>${spring.version}</version>
 		</dependency>
 
+		<!-- JSP -->
+
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
 		<!-- BD -->
 		<dependency>
 			<groupId>postgresql</groupId>

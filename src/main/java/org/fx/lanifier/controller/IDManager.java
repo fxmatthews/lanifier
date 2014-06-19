@@ -1,6 +1,7 @@
 package org.fx.lanifier.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.fx.lanifier.entites.SteamIDList;
@@ -15,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class IDManager {
-	
+
 	@Autowired
 	private SteamUserBuilder sUB;
 
@@ -25,18 +26,31 @@ public class IDManager {
 		return new ModelAndView("formulairesID");
 	}
 
-	// TODO : récupérer la liste des jeux + les infos des jeux
+	// TODO : récupérer les infos des jeux
 	@RequestMapping(value = "manageID", method = RequestMethod.POST)
-	public String displayID(@ModelAttribute("steamIDList") SteamIDList idList) {
+	public ModelAndView displayID(
+			@ModelAttribute("steamIDList") SteamIDList idList) {
 		List<String> ids = idList.getIds();
-		List<SteamUser> users = new ArrayList<SteamUser>();
-		List<String> blabla = new ArrayList<String>();
+		List<String> sharedGames = new ArrayList<String>();
+
 		for (String id : ids) {
-			System.out.println(id);;
-			 users.add(sUB.build(id));
-			 blabla.add(users.get(users.size()-1).getPseudo());
+			List<String> userGames = sUB.build(id).getJeux();
+			if (sharedGames.size() == 0)
+				sharedGames = userGames;
+			else {
+				Iterator<String> iterator = sharedGames.iterator();
+				while (iterator.hasNext()) {
+					String game = iterator.next();
+					if (!userGames.contains(game)) {
+						iterator.remove();
+					}
+				}
+			}
 		}
-		return blabla.get(0);
+
+		ModelAndView mav = new ModelAndView("gamesList");
+		mav.addObject("gamesList", sharedGames);
+		return mav;
 	}
 
 }
