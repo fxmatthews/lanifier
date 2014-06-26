@@ -1,4 +1,4 @@
-package org.fx.lanifier.steamapi;
+package org.fx.lanifier.steamapi.builder;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -6,6 +6,7 @@ import java.net.URL;
 
 import org.fx.lanifier.entites.jeux.pojoRest.GetGamesQueryResponse;
 import org.fx.lanifier.entites.settings.ManagementProperty;
+import org.fx.lanifier.steamapi.entity.SteamUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +36,7 @@ public class SteamUserBuilder {
 			GetGamesQueryResponse value = (GetGamesQueryResponse) mapper.readValue(new URL(
 					buildGamesUrl(steamID)), GetGamesQueryResponse.class);
 			user.setPseudo(value.toString());
-			user.setJeux(value.getResponse().getPrettyList());
+			user.setGamesList(value.getResponse());
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

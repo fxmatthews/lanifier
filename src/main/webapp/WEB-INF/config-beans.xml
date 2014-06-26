@@ -11,7 +11,7 @@
 		<property name="steamKey" value="${steamKey}" />
 	</bean>
 	
-	<bean class="org.fx.lanifier.steamapi.SteamUserBuilder"></bean>
+	<bean class="org.fx.lanifier.steamapi.builder.SteamUserBuilder"></bean>
 
 
 	<context:property-placeholder

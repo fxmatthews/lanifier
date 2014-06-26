@@ -1,12 +1,15 @@
 package org.fx.lanifier.controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.fx.lanifier.entites.SteamIDList;
-import org.fx.lanifier.steamapi.SteamUser;
-import org.fx.lanifier.steamapi.SteamUserBuilder;
+import org.fx.lanifier.entites.jeux.pojoRest.SteamGame;
+import org.fx.lanifier.steamapi.builder.GameBuilder;
+import org.fx.lanifier.steamapi.builder.SteamUserBuilder;
+import org.fx.lanifier.steamapi.entity.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,27 +33,57 @@ public class IDManager {
 	@RequestMapping(value = "manageID", method = RequestMethod.POST)
 	public ModelAndView displayID(
 			@ModelAttribute("steamIDList") SteamIDList idList) {
-		List<String> ids = idList.getIds();
-		List<String> sharedGames = new ArrayList<String>();
 
-		for (String id : ids) {
-			List<String> userGames = sUB.build(id).getJeux();
-			if (sharedGames.size() == 0)
-				sharedGames = userGames;
-			else {
-				Iterator<String> iterator = sharedGames.iterator();
-				while (iterator.hasNext()) {
-					String game = iterator.next();
-					if (!userGames.contains(game)) {
-						iterator.remove();
-					}
-				}
-			}
+		Map<String, String> sharedGames = getSharedGamesID(idList);
+
+		// we get games info after, since we don't need to check every game
+
+		List<String> maListe = new ArrayList<String>();
+		System.out.println(String.valueOf(sharedGames.size()));
+		for (Map.Entry<String, String> entrySet : sharedGames.entrySet()) {
+			Game game = GameBuilder.build(entrySet.getKey());
+			game.setGameName(entrySet.getValue());
+			if (game.isCoop())
+				maListe.add(entrySet.getValue());
 		}
 
 		ModelAndView mav = new ModelAndView("gamesList");
-		mav.addObject("gamesList", sharedGames);
+		mav.addObject("gamesList", maListe);
 		return mav;
 	}
 
+	/**
+	 * 
+	 * @param idList
+	 * 
+	 * @return
+	 */
+	private Map<String, String> getSharedGamesID(SteamIDList idList) {
+		// récupération des jeux de l'utilisateur
+		List<String> ids = idList.getIds();
+		Map<String, String> sharedGames = new HashMap<String, String>();
+		int iterNumber = 0;
+		for (String id : ids) {
+			List<SteamGame> userGamesList = sUB.build(id).getGamesList()
+					.getGames();
+			Map<String, String> userGames = new HashMap<>();
+			for (SteamGame ug : userGamesList)
+				userGames.put(ug.getAppid(), ug.getName());
+
+			if (iterNumber == 0) {
+				sharedGames = userGames;
+				iterNumber++;
+			} else {
+				Map<String, String> tmp = new HashMap<String, String>();
+				for (Map.Entry<String, String> entrySet : sharedGames
+						.entrySet()) {
+					if (userGames.containsKey(entrySet.getKey()))
+						tmp.put(entrySet.getKey(), entrySet.getValue());
+				}
+				sharedGames = tmp;
+			}
+		}
+
+		return sharedGames;
+	}
 }
